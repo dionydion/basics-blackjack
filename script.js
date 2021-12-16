@@ -60,10 +60,13 @@ var startGame = function(){
   dealerCards.push(shuffledDeck.pop())
   totalScore += playerCards[0].rank + playerCards[1].rank
   dealerTotalScore += dealerCards[0].rank + dealerCards[1].rank
+  hitButton.disabled = false
+  standButton.disabled = false
+  button.disabled = true
 }
 
 var displayPlayerCards = function(){
-  return `Hello!!<br><br>Your hand: <br>${playerCards[0].name} of ${createSymbol(playerCards[0].suit)} <br> ${playerCards[1].rank} of ${createSymbol(playerCards[1].suit)}<br>`
+  return `Hello!!<br><br>Your hand: <br>${playerCards[0].name} of ${createSymbol(playerCards[0].suit)} <br> ${playerCards[1].rank} of ${createSymbol(playerCards[1].suit)}`
 }
 
 
@@ -77,6 +80,9 @@ var playerHit= function(){
 
 var playerStand = function(){
   GAME_STATE = 'stand'
+  hitButton.disabled = true
+  standButton.disabled = true
+  showdownButton.disabled = false
 
 }
 
@@ -88,11 +94,11 @@ var restartGame= function(){
   GAME_STATE = 'waiting to begin'
 }
 var generateOutputMessage = function(playerCounter){
-  var myOutputValue = `Your hand:`
+  var myOutputValue = `Your hand:<br>`
   for (i=0;i<playerCards.length;i+=1){
-    myOutputValue += `<br><br>${playerCards[i].name} of ${createSymbol(playerCards[i].suit)}`
+    myOutputValue += `<br>${playerCards[i].name} of ${createSymbol(playerCards[i].suit)}`
   }
-  return myOutputValue + `<br><br>Your hand totals to ${totalScore}.`
+  return myOutputValue + `<br><br>Your hand totals to ${totalScore}.<br><br> Click 'Hit' to deal yourself another card or 'stand' to pass.`
 
 }
 
@@ -121,6 +127,8 @@ var checkTie = function(){
 
 var playerShowdown= function(){
   GAME_STATE = 'showdown'
+  button.disabled = false
+  showdownButton.disabled = true
 
 }
 var checkBJ = function(Cards){
@@ -145,15 +153,14 @@ var generateDealerMessage = function(){
     dealerCards.push(topCard)
     dealerTotalScore += topCard.rank
   }
-  var myOutputValue = "<br><br>Dealer's hand:"
+  var myOutputValue = "<br><br>Dealer's hand:<br>"
   for (i=0;i<dealerCards.length;i+=1){
-    myOutputValue += `<br><br>${dealerCards[i].name} of ${createSymbol(dealerCards[i].suit)}`
+    myOutputValue += `<br>${dealerCards[i].name} of ${createSymbol(dealerCards[i].suit)}`
   }  
   return myOutputValue + `<br><br>Dealer's hand totals to ${dealerTotalScore}.`
 }
 var GAME_STATE = 'waiting to begin'
 // MAIN function 
-
 var main = function(){
   if (GAME_STATE== 'end'){
     // restart the game
@@ -167,16 +174,26 @@ var main = function(){
     var myOutputValue = displayPlayerCards()
     // if both players blackjack
     if (checkBJ(playerCards) && checkBJ(dealerCards)){
+      hitButton.disabled = true
+      standButton.disabled = true
+      button.disabled = false
       myOutputValue += `<br>Wow! You and the Dealer got a blackjack!Such luck!<br><br> Play again?`
       GAME_STATE = 'end'
     }
     // if player blackjacks
+    
     else if (checkBJ(playerCards)){
+      hitButton.disabled = true
+      standButton.disabled = true
+      button.disabled = false
       myOutputValue += `<br>Wow! You got a blackjack!<br>Such luck! Such Stonk!<br><br> Play again?`
       GAME_STATE = 'end'
     }
     // if computer blackjacks
     else if (checkBJ(dealerCards)){
+      hitButton.disabled = true
+    standButton.disabled = true
+      button.disabled = false
       myOutputValue += `<br>Oh no! The Dealer got a blackjack!<br>TOO BAD!<br><br> Play again?`
       GAME_STATE = 'end'
     }
@@ -184,13 +201,16 @@ var main = function(){
     else{
       myOutputValue += `<br><br>Your hand totals to ${totalScore}. <br><br> Click 'Hit' to deal yourself another card or 'stand' to pass. `
     }
-    return myOutputValue
+    return myOutputValue 
   }
   // when player press Hit 
   if (GAME_STATE== 'hit'){
     var myOutputValue = generateOutputMessage()
     // if total score is more than 21, player not allowed to hit anymore  
     if (totalScore>21){
+      showdownButton.disabled = false
+      hitButton.disabled = true
+      standButton.disabled = true
       myOutputValue += `<br><br>You have exceeded the score of 21 :(<br>Hit the Showdown button!`
     }
     return myOutputValue
@@ -205,13 +225,15 @@ var main = function(){
     if (checkTie()){
       myOutputValue += "<br><br> Its a tie! Play again?"
     }
-    if (checkDealerWinner()){
+    else if (checkDealerWinner()){
       myOutputValue += "<br><br> You Lose. Play again?"
     }
     else{
       myOutputValue += `<br><br>You won!! Play again?`
     }
     GAME_STATE = 'end'
+    hitButton.disabled = true
+  standButton.disabled = true
     return myOutputValue
   }
 

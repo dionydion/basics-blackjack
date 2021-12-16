@@ -21,8 +21,8 @@
 
     <!-- sharing configuration -->
     <!-- Primary Meta Tags -->
-    <title>Blackjack - Basics - Dion Ngs</title>
-    <meta name="title" content="YOURNAME's BlackJack Game!">
+    <title>Dions 2 Man Blackjack</title>
+    <meta name="title" content="Dion's BlackJack Game!">
     <meta name="description" content="A fun card game I made myself! 😄💪🌈">
 
     <!-- Open Graph / Facebook -->
@@ -51,7 +51,8 @@
       }
 
       body {
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Didact Gothic', sans-serif;
+        
         margin-left: 30px;
         margin-right: 30px;
         background-color:#eee;
@@ -61,11 +62,15 @@
         background-repeat: no-repeat; /* Do not repeat the image */
         background-size: cover; /* Resize the background image to cover the entire container */
       }
-
+      p{
+        text-transform:uppercase;
+        font-weight:bold
+      }
       #output-div img{
         display:block;
         max-width:100%;
         max-height:200px;
+       
       }
       .header {
         text-align: center;
@@ -74,12 +79,43 @@
       }
 
       #container {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover; /* important for the color gradient */
+        border-radius:10px;
         background-color: pink;
         margin: 40px auto;
         max-width: 800px;
         padding: 38px 31px;
       }
 
+      #container.dark-mode{
+        background-color: #485461;
+        background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+      }
+      .lightmode-button {
+        position:absolute; 
+        right:20%;
+        cursor:pointer;
+        z-index:1;
+
+      }
+
+      .lightmode-button.dark-mode{
+        display:none;
+        z-index:0
+      }
+      .darkmode-button{
+        position:absolute; 
+        right:20%;
+        cursor:pointer;
+        z-index:0;
+        opacity:0
+      }
+
+      .darkmode-button.dark-mode{
+        z-index:1;
+        opacity:100
+      }
       input {
         font-size: 21px;
         line-height: 33px;
@@ -92,7 +128,16 @@
         font-size: 21px;
         line-height: 33px;
         margin: 0 0 23px 0;
-        padding: 0 6px;
+        padding: 0 10px;
+        border-radius:10px;
+        color:black;
+        border:1px solid black;
+        cursor:pointer;
+        transition: transform 80ms ease-in;
+        transition: opacity 80ms ease-in
+      }
+      button:hover{
+        transform:scale(0.95)
       }
 
       #output-div {
@@ -100,6 +145,8 @@
         margin: 20px auto;
         padding: 20px;
         width: 100%;
+        border-radius:10px;
+        
       }
 
       .logo-img {
@@ -107,7 +154,9 @@
         position: relative;
         top: 22px;
       }
-
+      .output-para.dark-mode{
+        color:#fff
+      }
       /* increase header font size on wider screens */
       @media screen and (min-width: 600px) {
         .header {
@@ -124,29 +173,39 @@
       Rocket Academy
       <img class="logo-img" src="https://ra-web-files.s3.ap-southeast-1.amazonaws.com/all/brand/logo.png" />
     </h1>
-    <h1 class="header">♣️ Basics - Blackjack ♠️</h1>
+    <h1 class="header">♣️ Dions 2 Man Blackjack game ♠️</h1>
     <div id="container">
-      <p>Number of players:</p>
-      <input
-        id="num-of-players"
-        type="number"
-        min="2"
-        max="10"
-        value="2"
-        onkeydown="return false"
-          />
-      <br />
-      <button id="submit-button">Play</button>
-      <button id="hit-button">Hit</button>
-      <button id="stand-button">Stand</button>
-      <button id="showdown-button">Showdown</button>
-      <p>Output:</p>
-      <div id="output-div">Welcome to Dion's Black Jack Game! <br><br> Please choose the number of players that will be playing this round and hit the play button! </button></div>
+      <button class ="lightmode-button">Light mode</button>
+      <button class ="darkmode-button">Dark  mode</button>
+      <div> 
+        <button id="submit-button">Play</button>
+        <button id="hit-button">Hit</button>
+        <button id="stand-button">Stand</button>
+        <button id="showdown-button">Showdown</button>
+      </div>
+      <p class = "output-para">Output:</p>
+      <div id="output-div">Welcome to Dion's Black Jack Game! <br><br> Hit the play button to begin playing! </button></div>
     </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
+      var outputPara = document.querySelector('.output-para')
+      var lightModeButton = document.querySelector('.lightmode-button')
+      var darkModeButton = document.querySelector('.darkmode-button')
+      lightModeButton.addEventListener('click',function(){
+        lightModeButton.classList.add("dark-mode")
+        darkModeButton.classList.add("dark-mode")
+        container.classList.add("dark-mode")
+        outputPara.classList.add("dark-mode")
+      })
+      darkModeButton.addEventListener('click',function(){
+        lightModeButton.classList.remove("dark-mode")
+        darkModeButton.classList.remove("dark-mode")
+        container.classList.remove("dark-mode")
+        outputPara.classList.remove("dark-mode")
+      })
+
       // when hit the submit button it sends input to main function
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
@@ -163,6 +222,7 @@
       });
       // when hit the hit button it runs the hit state function
       var hitButton = document.querySelector('#hit-button')
+      hitButton.disabled = true
       hitButton.addEventListener("click",function(){
         playerHit()
         var result = main()
@@ -172,6 +232,7 @@
       })
 
       var standButton = document.querySelector('#stand-button')
+      standButton.disabled = true
       standButton.addEventListener('click',function(){
         playerStand()
         var result = main()
@@ -180,6 +241,7 @@
       })
 
       var showdownButton = document.querySelector('#showdown-button')
+      showdownButton.disabled = true
       showdownButton.addEventListener('click',function(){
         playerShowdown()
         var result = main()
