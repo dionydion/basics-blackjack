@@ -177,7 +177,7 @@ var main = function(){
       hitButton.disabled = true
       standButton.disabled = true
       button.disabled = false
-      myOutputValue += `<br>Wow! You and the Dealer got a blackjack!Such luck!<br><br> Play again?`
+      myOutputValue += `<br>Wow! You and the Dealer got a blackjack!Such luck!<br><br> Play again?` + '<br><br><img src="https://c.tenor.com/ASqf9UFYc8UAAAAC/sad-lonely.gif"/ class = "center">'
       GAME_STATE = 'end'
     }
     // if player blackjacks
@@ -186,7 +186,8 @@ var main = function(){
       hitButton.disabled = true
       standButton.disabled = true
       button.disabled = false
-      myOutputValue += `<br>Wow! You got a blackjack!<br>Such luck! Such Stonk!<br><br> Play again?`
+      myOutputValue += `<br>Wow! You got a blackjack!<br>Such luck! Such Stonk!<br><br> Play again?` + 
+      '<br><br><img src="https://c.tenor.com/ixcE-G9MdMMAAAAC/tobey-maguire-hairflip.gif"/ class = "center">'
       GAME_STATE = 'end'
     }
     // if computer blackjacks
@@ -194,13 +195,14 @@ var main = function(){
       hitButton.disabled = true
     standButton.disabled = true
       button.disabled = false
-      myOutputValue += `<br>Oh no! The Dealer got a blackjack!<br>TOO BAD!<br><br> Play again?`
+      myOutputValue += `<br>Oh no! The Dealer got a blackjack!<br>TOO BAD!<br><br> Play again?`+ '<br><br><img src="https://c.tenor.com/WIW1ONiEU_UAAAAd/tobey-maguire-tobey.gif"/ class = "center">'
       GAME_STATE = 'end'
     }
     // neither blackjack
     else{
-      myOutputValue += `<br><br>Your hand totals to ${totalScore}. <br><br> Click 'Hit' to deal yourself another card or 'stand' to pass. `
+      myOutputValue += `<br><br>Your hand totals to ${totalScore}. <br><br> Click 'Hit' to deal yourself another card or 'stand' to pass. ` +'<br><br><img src="https://c.tenor.com/7PpiVBTIBXQAAAAC/spiderman-tobey-maguire.gif"/ class = "center">'
     }
+    
     return myOutputValue 
   }
   // when player press Hit 
@@ -211,25 +213,25 @@ var main = function(){
       showdownButton.disabled = false
       hitButton.disabled = true
       standButton.disabled = true
-      myOutputValue += `<br><br>You have exceeded the score of 21 :(<br>Hit the Showdown button!`
+      myOutputValue += `<br><br>You have exceeded the score of 21 :(<br>Hit the Showdown button!`+ '<br><br><img src="https://c.tenor.com/ASqf9UFYc8UAAAAC/sad-lonely.gif"/ class = "center">'
     }
-    return myOutputValue
+    return myOutputValue + '<br><br><img src="https://c.tenor.com/Jyi28_-rggYAAAAC/spiderman-tobeymaguire.gif"/ class = "center">'
   }
   // when player press stand
   if (GAME_STATE=='stand'){
-    return generateOutputMessage() + `<br><br>It is the Dealer's turn.<br>Click "Showdown" to view the Dealer's hand`
+    return generateOutputMessage() + `<br><br>It is the Dealer's turn.<br>Click "Showdown" to view the Dealer's hand` + '<br><br><img src="https://c.tenor.com/64IvgK_QzagAAAAC/spider-man3-tobey-maguire.gif"/ class = "center">'
   }
   // make the showdown button appear when stand is pressed
   if (GAME_STATE == 'showdown'){
     var myOutputValue = generateOutputMessage() + generateDealerMessage()
     if (checkTie()){
-      myOutputValue += "<br><br> Its a tie! Play again?"
+      myOutputValue += "<br><br> Its a tie! Play again?" +'<br><br><img src="https://c.tenor.com/xvFtxVmfaXcAAAAC/spiderman-thats-it.gif"/ class = "center">'
     }
     else if (checkDealerWinner()){
-      myOutputValue += "<br><br> You Lose. Play again?"
+      myOutputValue += "<br><br> You Lose. Play again?" + '<br><br><img src="https://c.tenor.com/iOGgrk1J9VsAAAAd/mr-ditkovich-spiderman.gif"/ class = "center">'
     }
     else{
-      myOutputValue += `<br><br>You won!! Play again?`
+      myOutputValue += `<br><br>You won!! Play again?` + '<br><br><img src="https://c.tenor.com/QyaGf0GUl4cAAAAC/spiderman-peter-parker.gif"/ class = "center">'
     }
     GAME_STATE = 'end'
     hitButton.disabled = true
