@@ -126,32 +126,67 @@
     </h1>
     <h1 class="header">♣️ Basics - Blackjack ♠️</h1>
     <div id="container">
-      <p>Input:</p>
-      <input id="input-field" />
+      <p>Number of players:</p>
+      <input
+        id="num-of-players"
+        type="number"
+        min="2"
+        max="10"
+        value="2"
+        onkeydown="return false"
+          />
       <br />
-      <button id="submit-button">Submit</button>
+      <button id="submit-button">Play</button>
       <button id="hit-button">Hit</button>
       <button id="stand-button">Stand</button>
+      <button id="showdown-button">Showdown</button>
       <p>Output:</p>
-      <div id="output-div">Welcome to Dion's Black Jack Game! <br><br> Please enter the number of players that will be playing this round and hit the submit button! </button></div>
+      <div id="output-div">Welcome to Dion's Black Jack Game! <br><br> Please choose the number of players that will be playing this round and hit the play button! </button></div>
     </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
+      // when hit the submit button it sends input to main function
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
         // Set result to input value
-        var input = document.querySelector("#input-field");
-        var result = main(input.value);
+        //var input = document.querySelector("#num-of-players");
+        var result = main();
 
         // Display result in output element
         var output = document.querySelector("#output-div");
         output.innerHTML = result;
 
         // Reset input value
-        input.value = "";
+        //input.value = "";
       });
+      // when hit the hit button it runs the hit state function
+      var hitButton = document.querySelector('#hit-button')
+      hitButton.addEventListener("click",function(){
+        playerHit()
+        var result = main()
+        var output = document.querySelector("#output-div");
+        output.innerHTML = result;
+
+      })
+
+      var standButton = document.querySelector('#stand-button')
+      standButton.addEventListener('click',function(){
+        playerStand()
+        var result = main()
+        var output = document.querySelector("#output-div")
+        output.innerHTML = result
+      })
+
+      var showdownButton = document.querySelector('#showdown-button')
+      showdownButton.addEventListener('click',function(){
+        playerShowdown()
+        var result = main()
+        var output = document.querySelector("#output-div")
+        output.innerHTML = result
+      })
+
     </script>
   </body>
 </html>
